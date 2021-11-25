@@ -7,17 +7,21 @@ function deselectAllNav() {
     if (dogNavli) dogNavli.classList.remove('selected')
   }
 
-  function isGoodYesNo(dogData) {
-    if (dogData.isGoodDog) return " No"
-    return " Yes"
+//   function isGoodYesNo(dogData) {
+//     if (dogData.isGoodDog) return " No"
+//     return " Yes"
     
-  }
+//   }
 
-  function isGoodBtn(dogData) {
-    if (isGoodYesNo(dogData) === " No") return "Bad Dog"
-    return "Good Dog"
-    
-  }
+//   function isGoodBtn(dogData) {
+//     if (isGoodYesNo(dogData) === " No") return "Bad Dog"
+//     return "Good Dog"
+//   }
+
+function toggleGoodDog(dog) {
+    dog.isGoodDog = !dog.isGoodDog
+    createDogProfile(dog) 
+}
 
 function createDogProfile(dogData) {
     const dogSection = document.querySelector('.main__dog-section')
@@ -39,22 +43,25 @@ function createDogProfile(dogData) {
     const bioTextEl = document.createElement("p")
     bioTextEl.textContent = dogData.bio
 
+    const howItIsEl = document.createElement("p")
+    // const isNaughty = document.createElement("em")
+    // isNaughty.textContent = "Is naughty?"
+    // howItIsEl.prepend(isNaughty, isGoodYesNo(dogData))
+
     const isNaughty = document.createElement("em")
     isNaughty.textContent = "Is naughty?"
+    howItIsEl.prepend(isNaughty, dogData.isGoodDog ? " No" : " Yes")
 
-    const howItIsEl = document.createElement("p")
-    howItIsEl.textContent = isGoodYesNo(dogData)
+    // howItIsEl.textContent = isGoodYesNo(dogData)
 
     const btnEl = document.createElement("button")
-    btnEl.textContent = isGoodBtn(dogData)
+    btnEl.textContent = dogData.isGoodDog ? " Bad Dog" : " Good Dog"
     
 
     btnEl.addEventListener("click", function () {
-        
-        
+        toggleGoodDog(dogData)
     })
 
-    howItIsEl.prepend(isNaughty)
     dogSection.append(nameEl, dogImageEl, dogDivEl, howItIsEl, btnEl)
     dogDivEl.append(bioEl, bioTextEl)
 }
